@@ -4,7 +4,7 @@ from image_detector import ImageDetector
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-image_path = PROJECT_ROOT / "backend" / "uploads" / "Anshika.jpg"
+image_path = PROJECT_ROOT / "backend" / "uploads" / "image.jpg"
 
 print("Image path:")
 print(image_path)
