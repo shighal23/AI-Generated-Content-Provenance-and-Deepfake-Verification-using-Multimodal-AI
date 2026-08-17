@@ -52,21 +52,59 @@ detector = ImageDetector()
 manipulation_analyzer = ManipulationAnalyzer()
 risk_engine = RiskEngine()
 
-
 def load_history():
     try:
-        return json.loads(
+        data = json.loads(
             HISTORY_FILE.read_text(encoding="utf-8")
         )
+
+        if isinstance(data, list):
+            return data
+
+        return []
+
     except Exception:
         return []
 
 
 def save_history(history):
     HISTORY_FILE.write_text(
-        json.dumps(history, indent=4),
+        json.dumps(
+            history,
+            indent=4,
+            ensure_ascii=False
+        ),
         encoding="utf-8"
     )
+
+
+def get_next_history_id(history):
+    """
+    Generates a unique history ID.
+
+    Example:
+    1, 2, 3, 4
+
+    If record 2 is deleted:
+    next ID will still be 5,
+    not 4 or 3.
+    """
+
+    if not history:
+        return 1
+
+    valid_ids = []
+
+    for item in history:
+        try:
+            valid_ids.append(int(item.get("id", 0)))
+        except (TypeError, ValueError):
+            continue
+
+    if not valid_ids:
+        return 1
+
+    return max(valid_ids) + 1
 
 
 def build_verification_report(
@@ -82,17 +120,43 @@ def build_verification_report(
             "file_size_bytes": file_size,
             "status": "completed"
         },
+
         "ml_analysis": detector_result,
+
         "forensics": {
-            "metadata": forensic_result.get("metadata", {}),
-            "ela": forensic_result.get("ela", {}),
-            "noise": forensic_result.get("noise", {})
+            "metadata": forensic_result.get(
+                "metadata",
+                {}
+            ),
+
+            "ela": forensic_result.get(
+                "ela",
+                {}
+            ),
+
+            "noise": forensic_result.get(
+                "noise",
+                {}
+            )
         },
+
         "risk_assessment": risk_result,
+
         "summary": {
-            "risk_score": risk_result.get("risk_score", 0),
-            "verdict": risk_result.get("verdict", "UNKNOWN"),
-            "reasons": risk_result.get("reasons", [])
+            "risk_score": risk_result.get(
+                "risk_score",
+                0
+            ),
+
+            "verdict": risk_result.get(
+                "verdict",
+                "UNKNOWN"
+            ),
+
+            "reasons": risk_result.get(
+                "reasons",
+                []
+            )
         }
     }
 
@@ -111,17 +175,30 @@ def health_check():
         "status": "healthy"
     }
 
-
 @app.post("/api/analyze/image")
 async def analyze_image(
     file: UploadFile = File(...)
 ):
-    extension = Path(file.filename).suffix.lower()
+
+
+    if not file.filename:
+        raise HTTPException(
+            status_code=400,
+            detail="No file selected."
+        )
+
+    extension = Path(
+        file.filename
+    ).suffix.lower()
+
 
     if extension not in ALLOWED_EXTENSIONS:
         raise HTTPException(
             status_code=400,
-            detail="Only JPG, JPEG, PNG and WEBP images are allowed."
+            detail=(
+                "Only JPG, JPEG, PNG and WEBP "
+                "images are allowed."
+            )
         )
 
     file_data = await file.read()
@@ -133,12 +210,21 @@ async def analyze_image(
         )
 
     file_path = UPLOAD_DIR / file.filename
-    file_path.write_bytes(file_data)
+
+    try:
+        file_path.write_bytes(file_data)
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Unable to save image: {str(e)}"
+        )
 
     try:
         detector_result = detector.analyze(
             str(file_path)
         )
+
     except Exception as e:
         raise HTTPException(
             status_code=500,
@@ -149,6 +235,7 @@ async def analyze_image(
         forensic_result = manipulation_analyzer.analyze(
             str(file_path)
         )
+
     except Exception as e:
         raise HTTPException(
             status_code=500,
@@ -160,6 +247,7 @@ async def analyze_image(
             forensic_result,
             detector_result
         )
+
     except Exception as e:
         raise HTTPException(
             status_code=500,
@@ -174,14 +262,28 @@ async def analyze_image(
         risk_result=risk_result
     )
 
+
     history = load_history()
 
+    history_id = get_next_history_id(history)
+
     history_record = {
-        "id": len(history) + 1,
+        "id": history_id,
+
         "timestamp": datetime.now().isoformat(),
+
         "filename": file.filename,
-        "risk_score": risk_result.get("risk_score", 0),
-        "verdict": risk_result.get("verdict", "UNKNOWN"),
+
+        "risk_score": risk_result.get(
+            "risk_score",
+            0
+        ),
+
+        "verdict": risk_result.get(
+            "verdict",
+            "UNKNOWN"
+        ),
+
         "report": report
     }
 
@@ -189,37 +291,140 @@ async def analyze_image(
 
     save_history(history)
 
+
     return {
         "status": "success",
-        "message": "Image verification completed",
-        "report": report,
-        "history_id": history_record["id"]
-    }
 
+        "message": (
+            "Image verification completed"
+        ),
+
+        "report": report,
+
+        "history_id": history_id
+    }
 
 @app.get("/api/history")
 def get_history():
+
     history = load_history()
 
     return {
         "status": "success",
+
         "count": len(history),
+
         "history": history
     }
 
 
 @app.get("/api/history/{history_id}")
-def get_history_item(history_id: int):
+def get_history_item(
+    history_id: int
+):
+
     history = load_history()
 
     for item in history:
-        if item.get("id") == history_id:
+
+        try:
+            item_id = int(
+                item.get("id")
+            )
+
+        except (TypeError, ValueError):
+            continue
+
+        if item_id == history_id:
+
             return {
                 "status": "success",
+
                 "history": item
             }
+
 
     raise HTTPException(
         status_code=404,
         detail="History record not found."
     )
+
+
+@app.delete("/api/history/{history_id}")
+def delete_history_item(
+    history_id: int
+):
+
+    history = load_history()
+
+    updated_history = []
+
+    deleted = False
+
+
+    for item in history:
+
+        try:
+            item_id = int(
+                item.get("id")
+            )
+
+        except (TypeError, ValueError):
+            item_id = -1
+
+
+        if item_id == history_id:
+
+            deleted = True
+
+            continue
+
+
+        updated_history.append(item)
+
+
+    if not deleted:
+
+        raise HTTPException(
+            status_code=404,
+            detail="History record not found."
+        )
+
+
+    save_history(updated_history)
+
+
+    return {
+        "status": "success",
+
+        "message": (
+            "History record deleted successfully."
+        ),
+
+        "deleted_id": history_id,
+
+        "remaining_count": len(
+            updated_history
+        )
+    }
+
+
+@app.delete("/api/history")
+def clear_history():
+
+    history = load_history()
+
+    deleted_count = len(history)
+
+    save_history([])
+
+
+    return {
+        "status": "success",
+
+        "message": (
+            "All history cleared successfully."
+        ),
+
+        "deleted_count": deleted_count
+    }
