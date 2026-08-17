@@ -1,0 +1,133 @@
+[
+    {
+        "id": 1,
+        "timestamp": "2026-08-17T18:22:41.451451",
+        "filename": "image.jpg",
+        "risk_score": 30,
+        "verdict": "MEDIUM_RISK",
+        "report": {
+            "verification": {
+                "filename": "image.jpg",
+                "file_size_bytes": 54293,
+                "status": "completed"
+            },
+            "ml_analysis": {
+                "model": "ResNet18-baseline",
+                "device": "cpu",
+                "class_id": 793,
+                "confidence": 0.6367
+            },
+            "forensics": {
+                "metadata": {
+                    "format": "JPEG",
+                    "width": 870,
+                    "height": 580,
+                    "mode": "RGB",
+                    "has_exif": true,
+                    "exif": {
+                        "ResolutionUnit": "2",
+                        "ExifOffset": "86",
+                        "Orientation": "1",
+                        "YCbCrPositioning": "1",
+                        "XResolution": "96.0",
+                        "YResolution": "96.0"
+                    }
+                },
+                "ela": {
+                    "method": "ELA",
+                    "jpeg_quality": 90,
+                    "max_difference": 90.0,
+                    "mean_difference": 45.0
+                },
+                "noise": {
+                    "method": "Noise Residual Analysis",
+                    "mean_noise": 1.7994,
+                    "noise_std": 5.9321,
+                    "max_noise": 111.0
+                }
+            },
+            "risk_assessment": {
+                "risk_score": 30,
+                "verdict": "MEDIUM_RISK",
+                "component_scores": {
+                    "metadata": 0,
+                    "ela": 30,
+                    "noise": 0
+                },
+                "reasons": [
+                    "High ELA difference detected."
+                ]
+            },
+            "summary": {
+                "risk_score": 30,
+                "verdict": "MEDIUM_RISK",
+                "reasons": [
+                    "High ELA difference detected."
+                ]
+            }
+        }
+    },
+    {
+        "id": 2,
+        "timestamp": "2026-08-17T18:23:12.807802",
+        "filename": "cartoon.png",
+        "risk_score": 45,
+        "verdict": "MEDIUM_RISK",
+        "report": {
+            "verification": {
+                "filename": "cartoon.png",
+                "file_size_bytes": 1532347,
+                "status": "completed"
+            },
+            "ml_analysis": {
+                "model": "ResNet18-baseline",
+                "device": "cpu",
+                "class_id": 917,
+                "confidence": 0.9838
+            },
+            "forensics": {
+                "metadata": {
+                    "format": "PNG",
+                    "width": 1024,
+                    "height": 1024,
+                    "mode": "RGB",
+                    "has_exif": false,
+                    "exif": {}
+                },
+                "ela": {
+                    "method": "ELA",
+                    "jpeg_quality": 90,
+                    "max_difference": 255.0,
+                    "mean_difference": 126.6667
+                },
+                "noise": {
+                    "method": "Noise Residual Analysis",
+                    "mean_noise": 4.2256,
+                    "noise_std": 10.1785,
+                    "max_noise": 135.0
+                }
+            },
+            "risk_assessment": {
+                "risk_score": 45,
+                "verdict": "MEDIUM_RISK",
+                "component_scores": {
+                    "metadata": 5,
+                    "ela": 40,
+                    "noise": 0
+                },
+                "reasons": [
+                    "No EXIF metadata was found.",
+                    "Very high ELA difference detected."
+                ]
+            },
+            "summary": {
+                "risk_score": 45,
+                "verdict": "MEDIUM_RISK",
+                "reasons": [
+                    "No EXIF metadata was found.",
+                    "Very high ELA difference detected."
+                ]
+            }
+        }
+    }
+]

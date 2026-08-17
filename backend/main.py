@@ -1,6 +1,8 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from pathlib import Path
 import sys
+import json
+from datetime import datetime
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -16,7 +18,14 @@ app = FastAPI(
 )
 
 UPLOAD_DIR = Path(__file__).resolve().parent / "uploads"
+HISTORY_DIR = Path(__file__).resolve().parent / "history"
+HISTORY_FILE = HISTORY_DIR / "history.json"
+
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+HISTORY_DIR.mkdir(parents=True, exist_ok=True)
+
+if not HISTORY_FILE.exists():
+    HISTORY_FILE.write_text("[]", encoding="utf-8")
 
 ALLOWED_EXTENSIONS = {
     ".jpg",
@@ -31,15 +40,29 @@ detector = ImageDetector()
 manipulation_analyzer = ManipulationAnalyzer()
 risk_engine = RiskEngine()
 
-analysis_history = []
+
+def load_history():
+    try:
+        return json.loads(
+            HISTORY_FILE.read_text(encoding="utf-8")
+        )
+    except Exception:
+        return []
+
+
+def save_history(history):
+    HISTORY_FILE.write_text(
+        json.dumps(history, indent=4),
+        encoding="utf-8"
+    )
 
 
 def build_verification_report(
-    filename: str,
-    file_size: int,
-    detector_result: dict,
-    forensic_result: dict,
-    risk_result: dict
+    filename,
+    file_size,
+    detector_result,
+    forensic_result,
+    risk_result
 ):
     return {
         "verification": {
@@ -81,12 +104,6 @@ def health_check():
 async def analyze_image(
     file: UploadFile = File(...)
 ):
-    if not file.filename:
-        raise HTTPException(
-            status_code=400,
-            detail="Filename is required."
-        )
-
     extension = Path(file.filename).suffix.lower()
 
     if extension not in ALLOWED_EXTENSIONS:
@@ -97,21 +114,13 @@ async def analyze_image(
 
     file_data = await file.read()
 
-    if not file_data:
-        raise HTTPException(
-            status_code=400,
-            detail="Uploaded file is empty."
-        )
-
     if len(file_data) > MAX_FILE_SIZE:
         raise HTTPException(
             status_code=400,
             detail="Image size must be less than 10 MB."
         )
 
-    safe_filename = Path(file.filename).name
-    file_path = UPLOAD_DIR / safe_filename
-
+    file_path = UPLOAD_DIR / file.filename
     file_path.write_bytes(file_data)
 
     try:
@@ -146,26 +155,59 @@ async def analyze_image(
         )
 
     report = build_verification_report(
-        filename=safe_filename,
+        filename=file.filename,
         file_size=len(file_data),
         detector_result=detector_result,
         forensic_result=forensic_result,
         risk_result=risk_result
     )
 
-    analysis_history.append(report)
+    history = load_history()
+
+    history_record = {
+        "id": len(history) + 1,
+        "timestamp": datetime.now().isoformat(),
+        "filename": file.filename,
+        "risk_score": risk_result.get("risk_score", 0),
+        "verdict": risk_result.get("verdict", "UNKNOWN"),
+        "report": report
+    }
+
+    history.append(history_record)
+
+    save_history(history)
 
     return {
         "status": "success",
         "message": "Image verification completed",
-        "report": report
+        "report": report,
+        "history_id": history_record["id"]
     }
 
 
-@app.get("/api/analysis/history")
-def get_analysis_history():
+@app.get("/api/history")
+def get_history():
+    history = load_history()
+
     return {
         "status": "success",
-        "count": len(analysis_history),
-        "history": analysis_history
+        "count": len(history),
+        "history": history
     }
+
+
+@app.get("/api/history/{history_id}")
+def get_history_item(history_id: int):
+    history = load_history()
+
+    for item in history:
+        if item.get("id") == history_id:
+            return {
+                "status": "success",
+                "history": item
+            }
+
+    raise HTTPException(
+        status_code=404,
+        detail="History record not found."
+    )
