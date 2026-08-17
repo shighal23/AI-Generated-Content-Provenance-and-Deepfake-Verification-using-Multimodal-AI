@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import sys
 import json
@@ -15,6 +16,17 @@ app = FastAPI(
     title="DeepVerify-X",
     description="AI-Generated Content Provenance and Deepfake Verification System",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 UPLOAD_DIR = Path(__file__).resolve().parent / "uploads"
