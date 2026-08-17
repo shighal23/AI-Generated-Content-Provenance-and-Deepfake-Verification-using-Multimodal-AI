@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from metadata_analyzer import MetadataAnalyzer
-from ela_analyzer import ELAAnalyzer
-from noise_analyzer import NoiseAnalyzer
+from ml.forensics.metadata_analyzer import MetadataAnalyzer
+from ml.forensics.ela_analyzer import ELAAnalyzer
+from ml.forensics.noise_analyzer import NoiseAnalyzer
 
 
 class ManipulationAnalyzer:
