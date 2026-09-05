@@ -1,22 +1,50 @@
+import sys
 from pathlib import Path
-from image_detector import ImageDetector
 
+from ml.inference.image_detector import ImageDetector
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+def main():
 
-image_path = PROJECT_ROOT / "backend" / "uploads" / "image.jpg"
+    if len(sys.argv) < 2:
+        print("Usage:")
+        print("python -m ml.inference.test_detector <image_path>")
+        return
 
-print("Image path:")
-print(image_path)
+    image_path = Path(sys.argv[1])
 
-print("Image exists:", image_path.exists())
+    if not image_path.exists():
+        print(f"ERROR: Image not found: {image_path}")
+        return
 
-if not image_path.exists():
-    raise FileNotFoundError(f"Image not found: {image_path}")
+    print("=" * 50)
+    print("Deepverify-X - Image Detector Test")
+    print("=" * 50)
 
-detector = ImageDetector()
+    print(f"Image: {image_path}")
+    print("\nLoading ResNet18 model...")
 
-result = detector.analyze(str(image_path))
+    try:
+        detector = ImageDetector()
 
-print("\nAnalysis Result:")
-print(result)
+        print("Model loaded successfully!")
+        print("\nRunning analysis...")
+
+        result = detector.analyze(str(image_path))
+
+        print("\n" + "=" * 50)
+        print("ANALYSIS RESULTS")
+        print("=" * 50)
+
+        print(f"Model       : {result['model']}")
+        print(f"Device      : {result['device']}")
+        print(f"class ID    : {result['class_id']}")
+        print(f"Confidence  : {result['confidence']}")
+
+        print("=" * 50)
+
+    except Exception as e:
+        print("\nERROR during analysis:")
+        print(e)
+
+if __name__ == "__main__":
+    main()           

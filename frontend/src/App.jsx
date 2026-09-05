@@ -64,6 +64,43 @@ function App() {
       item.verdict?.toUpperCase() === "HIGH_RISK"
   ).length;
 
+  const averageRiskScore =
+    history.length > 0
+      ? Math.round(
+          history.reduce(
+            (sum, item) =>
+              sum + Number(item.risk_score || 0),
+            0
+          ) / history.length
+        )
+      : 0;
+
+  const lowPercentage =
+    totalAnalyses > 0
+      ? Math.round(
+          (lowRiskCount / totalAnalyses) * 100
+        )
+      : 0;
+
+  const mediumPercentage =
+    totalAnalyses > 0
+      ? Math.round(
+          (mediumRiskCount / totalAnalyses) * 100
+        )
+      : 0;
+
+  const highPercentage =
+    totalAnalyses > 0
+      ? Math.round(
+          (highRiskCount / totalAnalyses) * 100
+        )
+      : 0;
+
+  const latestAnalysis =
+    history.length > 0
+      ? history[history.length - 1]
+      : null;
+
   const analyzeImage = async () => {
     if (!file) {
       setError("Please select an image first.");
@@ -96,6 +133,7 @@ function App() {
       }
 
       setResult(data);
+
       await loadHistory();
     } catch (err) {
       setError(
@@ -139,7 +177,9 @@ function App() {
     );
 
     const confirmed = window.confirm(
-      `Delete "${item?.filename || "this record"}" from history?`
+      `Delete "${
+        item?.filename || "this record"
+      }" from history?`
     );
 
     if (!confirmed) {
@@ -228,21 +268,8 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    if (
-      selectedHistory &&
-      reportRef.current
-    ) {
-      setTimeout(() => {
-        reportRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }, 150);
-    }
-  }, [selectedHistory]);
-
   const report = result?.report;
+
   const selectedReport =
     selectedHistory?.report;
 
@@ -272,9 +299,27 @@ function App() {
     100
   );
 
+  useEffect(() => {
+    if (
+      activeReport &&
+      reportRef.current
+    ) {
+      setTimeout(() => {
+        reportRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 150);
+    }
+  }, [activeReport]);
+
   return (
     <div className="app">
+
+      {/* ================= HEADER ================= */}
+
       <header className="header">
+
         <div>
           <h1>DeepVerify-X</h1>
 
@@ -287,12 +332,24 @@ function App() {
         <span className="status">
           ● API Connected
         </span>
+
       </header>
 
       <main className="container">
+
+        {/* ================= DASHBOARD ================= */}
+
         <section className="dashboard">
-          <div className="dashboard-card">
-            <span>Total Analyses</span>
+
+          <div className="dashboard-card total-card">
+
+            <div className="card-top">
+              <span>Total Analyses</span>
+
+              <span className="dashboard-icon">
+                ◉
+              </span>
+            </div>
 
             <strong>
               {totalAnalyses}
@@ -301,47 +358,173 @@ function App() {
             <small>
               Images verified
             </small>
+
           </div>
 
           <div className="dashboard-card low-card">
-            <span>Low Risk</span>
+
+            <div className="card-top">
+              <span>Low Risk</span>
+
+              <span className="dashboard-icon">
+                ✓
+              </span>
+            </div>
 
             <strong>
               {lowRiskCount}
             </strong>
 
+            <div className="mini-progress">
+              <div
+                style={{
+                  width: `${lowPercentage}%`,
+                }}
+              />
+            </div>
+
             <small>
-              Low risk results
+              {lowPercentage}% of total analyses
             </small>
+
           </div>
 
           <div className="dashboard-card medium-card">
-            <span>Medium Risk</span>
+
+            <div className="card-top">
+              <span>Medium Risk</span>
+
+              <span className="dashboard-icon">
+                !
+              </span>
+            </div>
 
             <strong>
               {mediumRiskCount}
             </strong>
 
+            <div className="mini-progress">
+              <div
+                style={{
+                  width: `${mediumPercentage}%`,
+                }}
+              />
+            </div>
+
             <small>
-              Medium risk results
+              {mediumPercentage}% of total analyses
             </small>
+
           </div>
 
           <div className="dashboard-card high-card">
-            <span>High Risk</span>
+
+            <div className="card-top">
+              <span>High Risk</span>
+
+              <span className="dashboard-icon">
+                ⚠
+              </span>
+            </div>
 
             <strong>
               {highRiskCount}
             </strong>
 
+            <div className="mini-progress">
+              <div
+                style={{
+                  width: `${highPercentage}%`,
+                }}
+              />
+            </div>
+
             <small>
-              High risk results
+              {highPercentage}% of total analyses
             </small>
+
           </div>
+
+          <div className="dashboard-card average-card">
+
+            <div className="card-top">
+              <span>Average Risk Score</span>
+
+              <span className="dashboard-icon">
+                ◈
+              </span>
+            </div>
+
+            <strong>
+              {averageRiskScore}
+            </strong>
+
+            <div className="score-mini-bar">
+              <div
+                style={{
+                  width: `${averageRiskScore}%`,
+                }}
+              />
+            </div>
+
+            <small>
+              Overall average risk
+            </small>
+
+          </div>
+
+          <div className="dashboard-card latest-card">
+
+            <div className="card-top">
+              <span>Latest Analysis</span>
+
+              <span className="dashboard-icon">
+                ●
+              </span>
+            </div>
+
+            {latestAnalysis ? (
+              <>
+                <strong>
+                  {latestAnalysis.risk_score ?? 0}
+                </strong>
+
+                <small className="latest-file">
+                  {latestAnalysis.filename}
+                </small>
+
+                <span
+                  className={`latest-verdict ${
+                    latestAnalysis.verdict?.toLowerCase() || ""
+                  }`}
+                >
+                  {latestAnalysis.verdict?.replace(
+                    /_/g,
+                    " "
+                  )}
+                </span>
+              </>
+            ) : (
+              <>
+                <strong>0</strong>
+
+                <small>
+                  No analysis available
+                </small>
+              </>
+            )}
+
+          </div>
+
         </section>
 
+        {/* ================= UPLOAD ================= */}
+
         <section className="upload-section">
-          <h2>Verify Your Image</h2>
+
+          <h2>
+            Verify Your Image
+          </h2>
 
           <p>
             Upload an image to analyze
@@ -350,10 +533,12 @@ function App() {
           </p>
 
           <div className="upload-box">
+
             <input
               type="file"
               accept=".jpg,.jpeg,.png,.webp"
               onChange={(e) => {
+
                 const selectedFile =
                   e.target.files?.[0] || null;
 
@@ -361,15 +546,19 @@ function App() {
                 setResult(null);
                 setSelectedHistory(null);
                 setError("");
+
               }}
             />
 
             {file && (
               <div className="file-name">
+
                 Selected:{" "}
+
                 <strong>
                   {file.name}
                 </strong>
+
               </div>
             )}
 
@@ -381,6 +570,7 @@ function App() {
                 ? "Analyzing..."
                 : "Analyze Image"}
             </button>
+
           </div>
 
           {error && (
@@ -388,20 +578,30 @@ function App() {
               {error}
             </div>
           )}
+
         </section>
 
+        {/* ================= HISTORY ================= */}
+
         <section className="history-section">
+
           <div className="section-heading">
+
             <div>
-              <h2>Analysis History</h2>
+
+              <h2>
+                Analysis History
+              </h2>
 
               <p>
                 Previous image verification
                 reports
               </p>
+
             </div>
 
             <div className="history-actions">
+
               <button
                 className="refresh-button"
                 onClick={loadHistory}
@@ -428,28 +628,33 @@ function App() {
                   ? "Clearing..."
                   : "Clear All"}
               </button>
+
             </div>
+
           </div>
 
           {history.length === 0 ? (
+
             <div className="empty-history">
               No analysis history available.
             </div>
+
           ) : (
+
             <div className="history-table">
+
               <div className="history-header">
+
                 <span>Image</span>
-
                 <span>Risk Score</span>
-
                 <span>Verdict</span>
-
                 <span>Date</span>
-
                 <span>Action</span>
+
               </div>
 
               {history.map((item) => {
+
                 const itemVerdict =
                   item.verdict ||
                   "UNKNOWN";
@@ -462,6 +667,7 @@ function App() {
                     className="history-row"
                     key={item.id}
                   >
+
                     <strong>
                       {item.filename}
                     </strong>
@@ -471,7 +677,9 @@ function App() {
                     </span>
 
                     <span
-                      className={`history-verdict ${itemVerdict.toLowerCase()}`}
+                      className={`history-verdict ${
+                        itemVerdict.toLowerCase()
+                      }`}
                     >
                       {itemVerdict.replace(
                         /_/g,
@@ -488,12 +696,11 @@ function App() {
                     </span>
 
                     <div className="history-buttons">
+
                       <button
                         className="view-button"
                         onClick={() =>
-                          openHistory(
-                            item.id
-                          )
+                          openHistory(item.id)
                         }
                         disabled={isDeleting}
                       >
@@ -503,9 +710,7 @@ function App() {
                       <button
                         className="delete-button"
                         onClick={() =>
-                          deleteHistory(
-                            item.id
-                          )
+                          deleteHistory(item.id)
                         }
                         disabled={isDeleting}
                       >
@@ -513,21 +718,31 @@ function App() {
                           ? "Deleting..."
                           : "Delete"}
                       </button>
+
                     </div>
+
                   </div>
                 );
               })}
+
             </div>
           )}
+
         </section>
 
+        {/* ================= RESULTS ================= */}
+
         {activeReport && (
+
           <section
             className="results"
             ref={reportRef}
           >
+
             <div className="results-heading">
+
               <div>
+
                 <h2>
                   Verification Result
                 </h2>
@@ -538,6 +753,7 @@ function App() {
                     ?.filename ||
                     "Unknown file"}
                 </p>
+
               </div>
 
               <div
@@ -548,9 +764,13 @@ function App() {
                   " "
                 )}
               </div>
+
             </div>
 
+            {/* ================= SCORE ================= */}
+
             <div className="score-card">
+
               <span>
                 Overall Risk Score
               </span>
@@ -564,44 +784,55 @@ function App() {
               </small>
 
               <div className="score-bar">
+
                 <div
                   style={{
-                    width:
-                      `${riskScore}%`,
+                    width: `${riskScore}%`,
                   }}
                 />
+
               </div>
+
             </div>
 
+            {/* ================= BASIC INFORMATION ================= */}
+
             <div className="grid">
+
               <div className="card">
+
                 <span>
                   ML Model
                 </span>
 
                 <strong>
-                  {ml?.model ||
-                    "N/A"}
+                  {ml?.model || "N/A"}
                 </strong>
+
               </div>
 
               <div className="card">
+
                 <span>
-                  Confidence
+                  Model Confidence
                 </span>
 
+                <small>
+                  Baseline ImageNet classification confidence
+                </small>
+
                 <strong>
-                  {ml?.confidence !==
-                  undefined
+                  {ml?.confidence !== undefined
                     ? `${(
-                        ml.confidence *
-                        100
+                        ml.confidence * 100
                       ).toFixed(2)}%`
                     : "N/A"}
                 </strong>
+
               </div>
 
               <div className="card">
+
                 <span>
                   Image Format
                 </span>
@@ -612,9 +843,11 @@ function App() {
                     ?.format ||
                     "N/A"}
                 </strong>
+
               </div>
 
               <div className="card">
+
                 <span>
                   Dimensions
                 </span>
@@ -630,16 +863,25 @@ function App() {
                     ?.height ||
                     "-"}
                 </strong>
+
               </div>
+
             </div>
 
+            {/* ================= FORENSIC ANALYSIS ================= */}
+
             <div className="analysis-grid">
+
+              {/* METADATA */}
+
               <div className="panel">
+
                 <h3>
                   Metadata
                 </h3>
 
                 <div className="info-row">
+
                   <span>
                     Format
                   </span>
@@ -650,9 +892,11 @@ function App() {
                       ?.format ||
                       "N/A"}
                   </strong>
+
                 </div>
 
                 <div className="info-row">
+
                   <span>
                     EXIF Available
                   </span>
@@ -664,9 +908,11 @@ function App() {
                       ? "Yes"
                       : "No"}
                   </strong>
+
                 </div>
 
                 <div className="info-row">
+
                   <span>
                     Mode
                   </span>
@@ -677,9 +923,11 @@ function App() {
                       ?.mode ||
                       "N/A"}
                   </strong>
+
                 </div>
 
                 <div className="info-row">
+
                   <span>
                     Width
                   </span>
@@ -690,9 +938,11 @@ function App() {
                       ?.width ||
                       "N/A"}
                   </strong>
+
                 </div>
 
                 <div className="info-row">
+
                   <span>
                     Height
                   </span>
@@ -703,15 +953,21 @@ function App() {
                       ?.height ||
                       "N/A"}
                   </strong>
+
                 </div>
+
               </div>
 
+              {/* ELA */}
+
               <div className="panel">
+
                 <h3>
                   ELA Analysis
                 </h3>
 
                 <div className="info-row">
+
                   <span>
                     JPEG Quality
                   </span>
@@ -722,9 +978,11 @@ function App() {
                       ?.jpeg_quality ??
                       "N/A"}
                   </strong>
+
                 </div>
 
                 <div className="info-row">
+
                   <span>
                     Mean Difference
                   </span>
@@ -735,9 +993,11 @@ function App() {
                       ?.mean_difference ??
                       "N/A"}
                   </strong>
+
                 </div>
 
                 <div className="info-row">
+
                   <span>
                     Maximum Difference
                   </span>
@@ -748,15 +1008,21 @@ function App() {
                       ?.max_difference ??
                       "N/A"}
                   </strong>
+
                 </div>
+
               </div>
 
+              {/* NOISE */}
+
               <div className="panel">
+
                 <h3>
                   Noise Analysis
                 </h3>
 
                 <div className="info-row">
+
                   <span>
                     Mean Noise
                   </span>
@@ -767,9 +1033,11 @@ function App() {
                       ?.mean_noise ??
                       "N/A"}
                   </strong>
+
                 </div>
 
                 <div className="info-row">
+
                   <span>
                     Noise Std
                   </span>
@@ -780,9 +1048,11 @@ function App() {
                       ?.noise_std ??
                       "N/A"}
                   </strong>
+
                 </div>
 
                 <div className="info-row">
+
                   <span>
                     Maximum Noise
                   </span>
@@ -793,38 +1063,71 @@ function App() {
                       ?.max_noise ??
                       "N/A"}
                   </strong>
+
                 </div>
+
               </div>
+
             </div>
 
+            {/* ================= RISK ASSESSMENT ================= */}
+
             <div className="reasons">
+
               <h3>
                 Risk Assessment
               </h3>
 
               {risk?.reasons?.length ? (
+
                 risk.reasons.map(
                   (reason, index) => (
+
                     <div
                       className="reason"
                       key={index}
                     >
-                      <span>!</span>
+
+                      <span>
+                        !
+                      </span>
+
                       {reason}
+
                     </div>
                   )
                 )
+
               ) : (
+
                 <div className="reason success">
-                  <span>✓</span>
+
+                  <span>
+                    ✓
+                  </span>
+
                   No significant risk
                   indicators detected.
+
                 </div>
               )}
+
+              {/* DISCLAIMER */}
+
+              <p className="risk-disclaimer">
+                Note: Forensic indicators are
+                not conclusive proof of AI
+                generation or image
+                manipulation.
+              </p>
+
             </div>
+
           </section>
         )}
+
       </main>
+
     </div>
   );
 }

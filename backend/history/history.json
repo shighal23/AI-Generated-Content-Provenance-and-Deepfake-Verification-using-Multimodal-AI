@@ -1,72 +1,9 @@
 [
     {
-        "id": 2,
-        "timestamp": "2026-08-17T18:23:12.807802",
-        "filename": "cartoon.png",
-        "risk_score": 45,
-        "verdict": "MEDIUM_RISK",
-        "report": {
-            "verification": {
-                "filename": "cartoon.png",
-                "file_size_bytes": 1532347,
-                "status": "completed"
-            },
-            "ml_analysis": {
-                "model": "ResNet18-baseline",
-                "device": "cpu",
-                "class_id": 917,
-                "confidence": 0.9838
-            },
-            "forensics": {
-                "metadata": {
-                    "format": "PNG",
-                    "width": 1024,
-                    "height": 1024,
-                    "mode": "RGB",
-                    "has_exif": false,
-                    "exif": {}
-                },
-                "ela": {
-                    "method": "ELA",
-                    "jpeg_quality": 90,
-                    "max_difference": 255.0,
-                    "mean_difference": 126.6667
-                },
-                "noise": {
-                    "method": "Noise Residual Analysis",
-                    "mean_noise": 4.2256,
-                    "noise_std": 10.1785,
-                    "max_noise": 135.0
-                }
-            },
-            "risk_assessment": {
-                "risk_score": 45,
-                "verdict": "MEDIUM_RISK",
-                "component_scores": {
-                    "metadata": 5,
-                    "ela": 40,
-                    "noise": 0
-                },
-                "reasons": [
-                    "No EXIF metadata was found.",
-                    "Very high ELA difference detected."
-                ]
-            },
-            "summary": {
-                "risk_score": 45,
-                "verdict": "MEDIUM_RISK",
-                "reasons": [
-                    "No EXIF metadata was found.",
-                    "Very high ELA difference detected."
-                ]
-            }
-        }
-    },
-    {
-        "id": 3,
-        "timestamp": "2026-08-17T18:48:42.064684",
+        "id": 1,
+        "timestamp": "2026-09-05T14:36:28.027025",
         "filename": "image.jpg",
-        "risk_score": 30,
+        "risk_score": 30.0,
         "verdict": "MEDIUM_RISK",
         "report": {
             "verification": {
@@ -110,49 +47,102 @@
                 }
             },
             "risk_assessment": {
-                "risk_score": 30,
+                "risk_score": 30.0,
                 "verdict": "MEDIUM_RISK",
-                "component_scores": {
-                    "metadata": 0,
-                    "ela": 30,
-                    "noise": 0
-                },
                 "reasons": [
-                    "High ELA difference detected."
+                    "Elevated ELA difference detected."
                 ]
             },
             "summary": {
-                "risk_score": 30,
+                "risk_score": 30.0,
                 "verdict": "MEDIUM_RISK",
                 "reasons": [
-                    "High ELA difference detected."
+                    "Elevated ELA difference detected."
                 ]
             }
         }
     },
     {
-        "id": 6,
-        "timestamp": "2026-08-17T18:54:33.199998",
-        "filename": "ps.jpeg",
-        "risk_score": 45,
+        "id": 2,
+        "timestamp": "2026-09-05T14:36:44.084487",
+        "filename": "ss.png",
+        "risk_score": 40.0,
         "verdict": "MEDIUM_RISK",
         "report": {
             "verification": {
-                "filename": "ps.jpeg",
-                "file_size_bytes": 201446,
+                "filename": "ss.png",
+                "file_size_bytes": 7845,
                 "status": "completed"
             },
             "ml_analysis": {
                 "model": "ResNet18-baseline",
                 "device": "cpu",
-                "class_id": 782,
-                "confidence": 0.4198
+                "class_id": 111,
+                "confidence": 0.0568
             },
             "forensics": {
                 "metadata": {
-                    "format": "JPEG",
-                    "width": 1600,
-                    "height": 1204,
+                    "format": "PNG",
+                    "width": 1122,
+                    "height": 267,
+                    "mode": "RGBA",
+                    "has_exif": false,
+                    "exif": {}
+                },
+                "ela": {
+                    "method": "ELA",
+                    "jpeg_quality": 90,
+                    "max_difference": 255.0,
+                    "mean_difference": 127.5
+                },
+                "noise": {
+                    "method": "Noise Residual Analysis",
+                    "mean_noise": 0.7288,
+                    "noise_std": 4.2402,
+                    "max_noise": 93.0
+                }
+            },
+            "risk_assessment": {
+                "risk_score": 40.0,
+                "verdict": "MEDIUM_RISK",
+                "reasons": [
+                    "No EXIF metadata was found.",
+                    "Elevated ELA difference detected."
+                ]
+            },
+            "summary": {
+                "risk_score": 40.0,
+                "verdict": "MEDIUM_RISK",
+                "reasons": [
+                    "No EXIF metadata was found.",
+                    "Elevated ELA difference detected."
+                ]
+            }
+        }
+    },
+    {
+        "id": 3,
+        "timestamp": "2026-09-05T14:37:02.991607",
+        "filename": "cartoon.png",
+        "risk_score": 40.0,
+        "verdict": "MEDIUM_RISK",
+        "report": {
+            "verification": {
+                "filename": "cartoon.png",
+                "file_size_bytes": 1532347,
+                "status": "completed"
+            },
+            "ml_analysis": {
+                "model": "ResNet18-baseline",
+                "device": "cpu",
+                "class_id": 917,
+                "confidence": 0.9838
+            },
+            "forensics": {
+                "metadata": {
+                    "format": "PNG",
+                    "width": 1024,
+                    "height": 1024,
                     "mode": "RGB",
                     "has_exif": false,
                     "exif": {}
@@ -160,77 +150,14 @@
                 "ela": {
                     "method": "ELA",
                     "jpeg_quality": 90,
-                    "max_difference": 220.0,
-                    "mean_difference": 83.3333
-                },
-                "noise": {
-                    "method": "Noise Residual Analysis",
-                    "mean_noise": 3.3239,
-                    "noise_std": 6.4436,
-                    "max_noise": 57.0
-                }
-            },
-            "risk_assessment": {
-                "risk_score": 45,
-                "verdict": "MEDIUM_RISK",
-                "component_scores": {
-                    "metadata": 5,
-                    "ela": 40,
-                    "noise": 0
-                },
-                "reasons": [
-                    "No EXIF metadata was found.",
-                    "Very high ELA difference detected."
-                ]
-            },
-            "summary": {
-                "risk_score": 45,
-                "verdict": "MEDIUM_RISK",
-                "reasons": [
-                    "No EXIF metadata was found.",
-                    "Very high ELA difference detected."
-                ]
-            }
-        }
-    },
-    {
-        "id": 9,
-        "timestamp": "2026-08-17T20:00:53.443989",
-        "filename": "Screenshot 2026-08-14 192607.png",
-        "risk_score": 40.0,
-        "verdict": "MEDIUM_RISK",
-        "report": {
-            "verification": {
-                "filename": "Screenshot 2026-08-14 192607.png",
-                "file_size_bytes": 113921,
-                "status": "completed"
-            },
-            "ml_analysis": {
-                "model": "ResNet18-baseline",
-                "device": "cpu",
-                "class_id": 916,
-                "confidence": 0.5314
-            },
-            "forensics": {
-                "metadata": {
-                    "format": "PNG",
-                    "width": 1409,
-                    "height": 910,
-                    "mode": "RGBA",
-                    "has_exif": false,
-                    "exif": {}
-                },
-                "ela": {
-                    "method": "ELA",
-                    "jpeg_quality": 90,
                     "max_difference": 255.0,
-                    "mean_difference": 127.5
+                    "mean_difference": 126.6667
                 },
                 "noise": {
                     "method": "Noise Residual Analysis",
-                    "mean_noise": 3.1891,
-                    "noise_std": 13.6608,
-                    "max_noise": 146.0
+                    "mean_noise": 4.2256,
+                    "noise_std": 10.1785,
+                    "max_noise": 135.0
                 }
             },
             "risk_assessment": {
@@ -252,43 +179,43 @@
         }
     },
     {
-        "id": 12,
-        "timestamp": "2026-08-17T20:43:47.339917",
-        "filename": "avalara.png",
+        "id": 4,
+        "timestamp": "2026-09-05T14:37:15.741580",
+        "filename": "signature.jpeg",
         "risk_score": 40.0,
         "verdict": "MEDIUM_RISK",
         "report": {
             "verification": {
-                "filename": "avalara.png",
-                "file_size_bytes": 490186,
+                "filename": "signature.jpeg",
+                "file_size_bytes": 59040,
                 "status": "completed"
             },
             "ml_analysis": {
                 "model": "ResNet18-baseline",
                 "device": "cpu",
-                "class_id": 916,
-                "confidence": 0.97
+                "class_id": 539,
+                "confidence": 0.2347
             },
             "forensics": {
                 "metadata": {
-                    "format": "PNG",
-                    "width": 1596,
-                    "height": 921,
-                    "mode": "RGBA",
+                    "format": "JPEG",
+                    "width": 755,
+                    "height": 1599,
+                    "mode": "RGB",
                     "has_exif": false,
                     "exif": {}
                 },
                 "ela": {
                     "method": "ELA",
                     "jpeg_quality": 90,
-                    "max_difference": 255.0,
-                    "mean_difference": 127.5
+                    "max_difference": 70.0,
+                    "mean_difference": 21.6667
                 },
                 "noise": {
                     "method": "Noise Residual Analysis",
-                    "mean_noise": 2.7207,
-                    "noise_std": 11.1266,
-                    "max_noise": 173.0
+                    "mean_noise": 0.3824,
+                    "noise_std": 1.0379,
+                    "max_noise": 29.0
                 }
             },
             "risk_assessment": {
