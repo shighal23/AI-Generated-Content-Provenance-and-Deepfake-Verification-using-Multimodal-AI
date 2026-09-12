@@ -235,5 +235,68 @@
                 ]
             }
         }
+    },
+    {
+        "id": 5,
+        "timestamp": "2026-09-08T13:50:28.910351",
+        "filename": "image.jpg",
+        "risk_score": 30.0,
+        "verdict": "MEDIUM_RISK",
+        "report": {
+            "verification": {
+                "filename": "image.jpg",
+                "file_size_bytes": 54293,
+                "status": "completed"
+            },
+            "ml_analysis": {
+                "model": "ResNet18-baseline",
+                "device": "cpu",
+                "class_id": 793,
+                "confidence": 0.6367
+            },
+            "forensics": {
+                "metadata": {
+                    "format": "JPEG",
+                    "width": 870,
+                    "height": 580,
+                    "mode": "RGB",
+                    "has_exif": true,
+                    "exif": {
+                        "ResolutionUnit": "2",
+                        "ExifOffset": "86",
+                        "Orientation": "1",
+                        "YCbCrPositioning": "1",
+                        "XResolution": "96.0",
+                        "YResolution": "96.0"
+                    }
+                },
+                "ela": {
+                    "method": "ELA",
+                    "jpeg_quality": 90,
+                    "max_difference": 90.0,
+                    "mean_difference": 45.0
+                },
+                "noise": {
+                    "method": "Noise Residual Analysis",
+                    "mean_noise": 1.7994,
+                    "noise_std": 5.9321,
+                    "max_noise": 111.0
+                }
+            },
+            "risk_assessment": {
+                "risk_score": 30.0,
+                "verdict": "MEDIUM_RISK",
+                "reasons": [
+                    "Elevated ELA difference detected."
+                ]
+            },
+            "summary": {
+                "risk_score": 30.0,
+                "verdict": "MEDIUM_RISK",
+                "reasons": [
+                    "Elevated ELA difference detected."
+                ]
+            }
+        }
     }
 ]
