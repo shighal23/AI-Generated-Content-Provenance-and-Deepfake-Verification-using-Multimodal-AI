@@ -1,21 +1,26 @@
+# Python
 __pycache__/
 *.py[cod]
 *.pyo
 
+# Virtual environments
 .venv/
 venv/
 env/
 
-.env
-.env.*
+# Generated ELA reports
+backend/reports/
+backend/backend/
 
-backend/uploads/*
-!backend/uploads/.gitkeep
+# Test media
+test_audio.mp3
+test_video.mp4
 
-.pytest_cache/
-.mypy_cache/
+# Frontend backup files
+frontend/src/*_backup*.jsx
 
-.vscode/
-
-.DS_Store
-Thumbs.db
+# Local history
+# Uncomment this if you don't want local analysis history on GitHub
+# backend/history/history.json
+# Uploaded files
+backend/uploads/
