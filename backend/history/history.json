@@ -1,90 +1,86 @@
 [
     {
-        "id": 1,
-        "timestamp": "2026-09-05T14:36:28.027025",
-        "filename": "image.jpg",
-        "risk_score": 30.0,
+        "id": 14,
+        "timestamp": "2026-09-12T19:30:15.491122",
+        "filename": "fake girl image.png",
+        "risk_score": 40.0,
         "verdict": "MEDIUM_RISK",
         "report": {
             "verification": {
-                "filename": "image.jpg",
-                "file_size_bytes": 54293,
+                "filename": "fake girl image.png",
+                "file_size_bytes": 128431,
                 "status": "completed"
             },
             "ml_analysis": {
                 "model": "ResNet18-baseline",
                 "device": "cpu",
-                "class_id": 793,
-                "confidence": 0.6367
+                "class_id": 824,
+                "confidence": 0.2908
             },
             "forensics": {
                 "metadata": {
-                    "format": "JPEG",
-                    "width": 870,
-                    "height": 580,
-                    "mode": "RGB",
-                    "has_exif": true,
-                    "exif": {
-                        "ResolutionUnit": "2",
-                        "ExifOffset": "86",
-                        "Orientation": "1",
-                        "YCbCrPositioning": "1",
-                        "XResolution": "96.0",
-                        "YResolution": "96.0"
-                    }
+                    "format": "PNG",
+                    "width": 305,
+                    "height": 257,
+                    "mode": "RGBA",
+                    "has_exif": false,
+                    "exif": {}
                 },
                 "ela": {
                     "method": "ELA",
                     "jpeg_quality": 90,
-                    "max_difference": 90.0,
-                    "mean_difference": 45.0
+                    "max_difference": 220.0,
+                    "mean_difference": 100.0,
+                    "heatmap_path": "C:\\Users\\Shivam\\Desktop\\DeepVerify-X\\backend\\reports\\ela\\fake girl image_ela.png"
                 },
                 "noise": {
                     "method": "Noise Residual Analysis",
-                    "mean_noise": 1.7994,
-                    "noise_std": 5.9321,
-                    "max_noise": 111.0
+                    "mean_noise": 2.418,
+                    "noise_std": 4.5539,
+                    "max_noise": 70.0
                 }
             },
             "risk_assessment": {
-                "risk_score": 30.0,
+                "risk_score": 40.0,
                 "verdict": "MEDIUM_RISK",
                 "reasons": [
+                    "No EXIF metadata was found.",
                     "Elevated ELA difference detected."
                 ]
             },
             "summary": {
-                "risk_score": 30.0,
+                "risk_score": 40.0,
                 "verdict": "MEDIUM_RISK",
                 "reasons": [
+                    "No EXIF metadata was found.",
                     "Elevated ELA difference detected."
                 ]
             }
         }
     },
     {
-        "id": 2,
-        "timestamp": "2026-09-05T14:36:44.084487",
-        "filename": "ss.png",
+        "id": 16,
+        "timestamp": "2026-09-12T19:51:52.194661",
+        "filename": "Real Butterfly image.png",
         "risk_score": 40.0,
         "verdict": "MEDIUM_RISK",
         "report": {
             "verification": {
-                "filename": "ss.png",
-                "file_size_bytes": 7845,
+                "filename": "Real Butterfly image.png",
+                "file_size_bytes": 122637,
                 "status": "completed"
             },
             "ml_analysis": {
                 "model": "ResNet18-baseline",
                 "device": "cpu",
-                "class_id": 111,
-                "confidence": 0.0568
+                "class_id": 323,
+                "confidence": 0.9561
             },
             "forensics": {
                 "metadata": {
                     "format": "PNG",
-                    "width": 1122,
-                    "height": 267,
+                    "width": 302,
+                    "height": 241,
                     "mode": "RGBA",
                     "has_exif": false,
                     "exif": {}
@@ -93,13 +89,20 @@
                     "method": "ELA",
                     "jpeg_quality": 90,
                     "max_difference": 255.0,
-                    "mean_difference": 127.5
+                    "mean_difference": 126.6667,
+                    "heatmap_path": "C:\\Users\\Shivam\\Desktop\\DeepVerify-X\\backend\\reports\\ela\\Real Butterfly image_ela.png"
                 },
                 "noise": {
                     "method": "Noise Residual Analysis",
-                    "mean_noise": 0.7288,
-                    "noise_std": 4.2402,
-                    "max_noise": 93.0
+                    "mean_noise": 3.5739,
+                    "noise_std": 9.5524,
+                    "max_noise": 133.0
+                },
+                "integrity": {
+                    "algorithm": "SHA-256",
+                    "sha256": "7e18fa9b37a1bd278fa4d728d53fdb82ad19cf3f7f6a90f64214243a727f303c",
+                    "filename": "Real Butterfly image.png",
+                    "file_size_bytes": 122637
                 }
             },
             "risk_assessment": {
@@ -121,29 +124,29 @@
         }
     },
     {
-        "id": 3,
-        "timestamp": "2026-09-05T14:37:02.991607",
-        "filename": "cartoon.png",
+        "id": 17,
+        "timestamp": "2026-09-12T19:52:14.664758",
+        "filename": "Real nature image.png",
         "risk_score": 40.0,
         "verdict": "MEDIUM_RISK",
         "report": {
             "verification": {
-                "filename": "cartoon.png",
-                "file_size_bytes": 1532347,
+                "filename": "Real nature image.png",
+                "file_size_bytes": 140524,
                 "status": "completed"
             },
             "ml_analysis": {
                 "model": "ResNet18-baseline",
                 "device": "cpu",
-                "class_id": 917,
-                "confidence": 0.9838
+                "class_id": 975,
+                "confidence": 0.5391
             },
             "forensics": {
                 "metadata": {
                     "format": "PNG",
-                    "width": 1024,
-                    "height": 1024,
-                    "mode": "RGB",
+                    "width": 310,
+                    "height": 255,
+                    "mode": "RGBA",
                     "has_exif": false,
                     "exif": {}
                 },
@@ -151,13 +154,20 @@
                     "method": "ELA",
                     "jpeg_quality": 90,
                     "max_difference": 255.0,
-                    "mean_difference": 126.6667
+                    "mean_difference": 115.0,
+                    "heatmap_path": "C:\\Users\\Shivam\\Desktop\\DeepVerify-X\\backend\\reports\\ela\\Real nature image_ela.png"
                 },
                 "noise": {
                     "method": "Noise Residual Analysis",
-                    "mean_noise": 4.2256,
-                    "noise_std": 10.1785,
-                    "max_noise": 135.0
+                    "mean_noise": 4.448,
+                    "noise_std": 8.4474,
+                    "max_noise": 76.0
+                },
+                "integrity": {
+                    "algorithm": "SHA-256",
+                    "sha256": "d341fae707770853cac6dd26460f73735297543a3e225266e48ae7385c9dc7bf",
+                    "filename": "Real nature image.png",
+                    "file_size_bytes": 140524
                 }
             },
             "risk_assessment": {
@@ -179,43 +189,50 @@
         }
     },
     {
-        "id": 4,
-        "timestamp": "2026-09-05T14:37:15.741580",
-        "filename": "signature.jpeg",
+        "id": 20,
+        "timestamp": "2026-09-13T15:24:42.278262",
+        "filename": "fake girl image.png",
         "risk_score": 40.0,
         "verdict": "MEDIUM_RISK",
         "report": {
             "verification": {
-                "filename": "signature.jpeg",
-                "file_size_bytes": 59040,
+                "filename": "fake girl image.png",
+                "file_size_bytes": 128431,
                 "status": "completed"
             },
             "ml_analysis": {
                 "model": "ResNet18-baseline",
                 "device": "cpu",
-                "class_id": 539,
-                "confidence": 0.2347
+                "class_id": 824,
+                "confidence": 0.2908
             },
             "forensics": {
                 "metadata": {
-                    "format": "JPEG",
-                    "width": 755,
-                    "height": 1599,
-                    "mode": "RGB",
+                    "format": "PNG",
+                    "width": 305,
+                    "height": 257,
+                    "mode": "RGBA",
                     "has_exif": false,
                     "exif": {}
                 },
                 "ela": {
                     "method": "ELA",
                     "jpeg_quality": 90,
-                    "max_difference": 70.0,
-                    "mean_difference": 21.6667
+                    "max_difference": 220.0,
+                    "mean_difference": 100.0,
+                    "heatmap_path": "C:\\Users\\Shivam\\Desktop\\DeepVerify-X\\backend\\reports\\ela\\fake girl image_ela.png"
                 },
                 "noise": {
                     "method": "Noise Residual Analysis",
-                    "mean_noise": 0.3824,
-                    "noise_std": 1.0379,
-                    "max_noise": 29.0
+                    "mean_noise": 2.418,
+                    "noise_std": 4.5539,
+                    "max_noise": 70.0
+                },
+                "integrity": {
+                    "algorithm": "SHA-256",
+                    "sha256": "00d2e234c828584f697224f13a91de6b4d313aa8837c00d3034ec68b98f365f7",
+                    "filename": "fake girl image.png",
+                    "file_size_bytes": 128431
                 }
             },
             "risk_assessment": {
@@ -237,65 +254,327 @@
         }
     },
     {
-        "id": 5,
-        "timestamp": "2026-09-08T13:50:28.910351",
-        "filename": "image.jpg",
-        "risk_score": 30.0,
+        "id": 21,
+        "timestamp": "2026-09-13T16:27:52.798107",
+        "filename": "A realistic short cinematic video of a fictional young man sitting at a desk in a modern office, looking at a laptop and naturally talking to the camera. Realistic office lighting, natural facial expressions,  (2).mp4",
+        "file_type": "video",
+        "risk_score": null,
+        "verdict": "VIDEO_ANALYSIS_COMPLETED",
+        "report": {
+            "verification": {
+                "filename": "A realistic short cinematic video of a fictional young man sitting at a desk in a modern office, looking at a laptop and naturally talking to the camera. Realistic office lighting, natural facial expressions,  (2).mp4",
+                "file_size_bytes": 533825,
+                "file_type": "video",
+                "status": "completed"
+            },
+            "video_analysis": {
+                "method": "Video Forensic Analysis",
+                "filename": "A realistic short cinematic video of a fictional young man sitting at a desk in a modern office, looking at a laptop and naturally talking to the camera. Realistic office lighting, natural facial expressions,  (2).mp4",
+                "file_size_bytes": 533825,
+                "format": "mp4",
+                "duration_seconds": 5.88,
+                "frame_count": 141,
+                "fps": 24.0,
+                "width": 1366,
+                "height": 768,
+                "resolution": "1366x768",
+                "resolution_category": "HD",
+                "fps_category": "NORMAL",
+                "sampled_frames": 5,
+                "readable_frames": 5,
+                "frame_status": "NORMAL",
+                "analysis_status": "COMPLETED"
+            },
+            "summary": {
+                "analysis_status": "COMPLETED",
+                "frame_status": "NORMAL",
+                "resolution": "1366x768",
+                "duration_seconds": 5.88
+            }
+        }
+    },
+    {
+        "id": 22,
+        "timestamp": "2026-09-13T18:16:54.840284",
+        "filename": "ElevenLabs_2026-09-13T11_41_51_Roger - Laid-Back, Casual, Resonant_pre_sp100_s50_sb75_se0_b_m2.mp3",
+        "file_type": "audio",
+        "risk_score": null,
+        "verdict": "AUDIO_ANALYSIS_COMPLETED",
+        "report": {
+            "verification": {
+                "filename": "ElevenLabs_2026-09-13T11_41_51_Roger - Laid-Back, Casual, Resonant_pre_sp100_s50_sb75_se0_b_m2.mp3",
+                "file_size_bytes": 188011,
+                "file_type": "audio",
+                "status": "completed"
+            },
+            "audio_analysis": {
+                "method": "Audio Forensic Analysis",
+                "filename": "ElevenLabs_2026-09-13T11_41_51_Roger - Laid-Back, Casual, Resonant_pre_sp100_s50_sb75_se0_b_m2.mp3",
+                "file_size_bytes": 188011,
+                "format": "MP3",
+                "analysis_status": "COMPLETED",
+                "duration_seconds": 10.71,
+                "sample_rate": 44100,
+                "sample_rate_category": "STANDARD",
+                "channels": 1,
+                "channel_type": "MONO",
+                "bitrate": 128000,
+                "bitrate_kbps": 128.0
+            },
+            "summary": {
+                "analysis_status": "COMPLETED",
+                "format": "MP3",
+                "duration_seconds": 10.71,
+                "sample_rate": 44100,
+                "channels": 1,
+                "bitrate_kbps": 128.0
+            }
+        }
+    },
+    {
+        "id": 23,
+        "timestamp": "2026-09-14T10:37:18.381862",
+        "filename": "Fake cloud image.png",
+        "file_type": "image",
+        "risk_score": 40.0,
         "verdict": "MEDIUM_RISK",
         "report": {
             "verification": {
-                "filename": "image.jpg",
-                "file_size_bytes": 54293,
+                "filename": "Fake cloud image.png",
+                "file_size_bytes": 124120,
                 "status": "completed"
             },
             "ml_analysis": {
                 "model": "ResNet18-baseline",
                 "device": "cpu",
-                "class_id": 793,
-                "confidence": 0.6367
+                "class_id": 483,
+                "confidence": 0.9888
             },
             "forensics": {
                 "metadata": {
-                    "format": "JPEG",
-                    "width": 870,
-                    "height": 580,
-                    "mode": "RGB",
-                    "has_exif": true,
-                    "exif": {
-                        "ResolutionUnit": "2",
-                        "ExifOffset": "86",
-                        "Orientation": "1",
-                        "YCbCrPositioning": "1",
-                        "XResolution": "96.0",
-                        "YResolution": "96.0"
-                    }
+                    "format": "PNG",
+                    "width": 305,
+                    "height": 237,
+                    "mode": "RGBA",
+                    "has_exif": false,
+                    "exif": {}
                 },
                 "ela": {
                     "method": "ELA",
                     "jpeg_quality": 90,
-                    "max_difference": 90.0,
-                    "mean_difference": 45.0
+                    "max_difference": 255.0,
+                    "mean_difference": 113.3333,
+                    "heatmap_path": "C:\\Users\\Shivam\\Desktop\\DeepVerify-X\\backend\\reports\\ela\\Fake cloud image_ela.png"
                 },
                 "noise": {
                     "method": "Noise Residual Analysis",
-                    "mean_noise": 1.7994,
-                    "noise_std": 5.9321,
-                    "max_noise": 111.0
+                    "mean_noise": 3.11,
+                    "noise_std": 6.6429,
+                    "max_noise": 78.0
+                },
+                "integrity": {
+                    "algorithm": "SHA-256",
+                    "sha256": "81b02b5df41a503656dc4b46f5c5c3a3d8216b308478f7408a3cd83dd2501ea8",
+                    "filename": "Fake cloud image.png",
+                    "file_size_bytes": 124120
                 }
             },
             "risk_assessment": {
-                "risk_score": 30.0,
+                "risk_score": 40.0,
                 "verdict": "MEDIUM_RISK",
                 "reasons": [
+                    "No EXIF metadata was found.",
                     "Elevated ELA difference detected."
                 ]
             },
             "summary": {
-                "risk_score": 30.0,
+                "risk_score": 40.0,
                 "verdict": "MEDIUM_RISK",
                 "reasons": [
+                    "No EXIF metadata was found.",
                     "Elevated ELA difference detected."
                 ]
+            }
+        }
+    },
+    {
+        "id": 24,
+        "timestamp": "2026-09-14T10:37:49.254321",
+        "filename": "video-7720.mp4",
+        "file_type": "video",
+        "risk_score": null,
+        "verdict": "VIDEO_ANALYSIS_COMPLETED",
+        "report": {
+            "verification": {
+                "filename": "video-7720.mp4",
+                "file_size_bytes": 554199,
+                "file_type": "video",
+                "status": "completed"
+            },
+            "video_analysis": {
+                "method": "Video Forensic Analysis",
+                "filename": "video-7720.mp4",
+                "file_size_bytes": 554199,
+                "format": "mp4",
+                "duration_seconds": 20.27,
+                "frame_count": 608,
+                "fps": 30.0,
+                "width": 720,
+                "height": 1280,
+                "resolution": "720x1280",
+                "resolution_category": "LOW_RESOLUTION",
+                "fps_category": "NORMAL",
+                "sampled_frames": 5,
+                "readable_frames": 5,
+                "frame_status": "NORMAL",
+                "analysis_status": "COMPLETED"
+            },
+            "summary": {
+                "analysis_status": "COMPLETED",
+                "frame_status": "NORMAL",
+                "resolution": "720x1280",
+                "duration_seconds": 20.27
+            }
+        }
+    },
+    {
+        "id": 25,
+        "timestamp": "2026-09-14T10:38:18.345634",
+        "filename": "ElevenLabs_2026-09-13T11_41_51_Roger - Laid-Back, Casual, Resonant_pre_sp100_s50_sb75_se0_b_m2.mp3",
+        "file_type": "audio",
+        "risk_score": null,
+        "verdict": "AUDIO_ANALYSIS_COMPLETED",
+        "report": {
+            "verification": {
+                "filename": "ElevenLabs_2026-09-13T11_41_51_Roger - Laid-Back, Casual, Resonant_pre_sp100_s50_sb75_se0_b_m2.mp3",
+                "file_size_bytes": 188011,
+                "file_type": "audio",
+                "status": "completed"
+            },
+            "audio_analysis": {
+                "method": "Audio Forensic Analysis",
+                "filename": "ElevenLabs_2026-09-13T11_41_51_Roger - Laid-Back, Casual, Resonant_pre_sp100_s50_sb75_se0_b_m2.mp3",
+                "file_size_bytes": 188011,
+                "format": "MP3",
+                "analysis_status": "COMPLETED",
+                "duration_seconds": 10.71,
+                "sample_rate": 44100,
+                "sample_rate_category": "STANDARD",
+                "channels": 1,
+                "channel_type": "MONO",
+                "bitrate": 128000,
+                "bitrate_kbps": 128.0
+            },
+            "summary": {
+                "analysis_status": "COMPLETED",
+                "format": "MP3",
+                "duration_seconds": 10.71,
+                "sample_rate": 44100,
+                "channels": 1,
+                "bitrate_kbps": 128.0
+            }
+        }
+    },
+    {
+        "id": 26,
+        "timestamp": "2026-09-14T13:49:49.675790",
+        "filename": "Text Message",
+        "file_type": "message",
+        "risk_score": 40,
+        "verdict": "MEDIUM_Risk",
+        "report": {
+            "verification": {
+                "file_type": "message",
+                "status": "completed"
+            },
+            "message_analysis": {
+                "method": "Message Forensic Analysis",
+                "analysis_status": "COMPLETED",
+                "text_length": 158,
+                "word_count": 24,
+                "character_count": 158,
+                "url_count": 1,
+                "email_count": 1,
+                "phone_ count": 0,
+                "suspicious_keywords": [
+                    "urgent",
+                    "verify your account",
+                    "click here",
+                    "congratulations",
+                    "you have won",
+                    "claim now"
+                ],
+                "exclamation_count": 2,
+                "question_count": 0,
+                "uppercase_ratio": 0.078,
+                "repeated_punctuation": false,
+                "risk_score": 40,
+                "verdict": "MEDIUM_Risk",
+                "reasons": [
+                    "Detected 6 suspicious keyword pattern(s).",
+                    "Detected 1 URL/link(s).",
+                    "Detected 1 email address(es)."
+                ]
+            },
+            "summary": {
+                "analysis_status": "COMPLETED",
+                "word_count": 24,
+                "url_count": 1,
+                "email_count": 1,
+                "phone_count": 0,
+                "risk_score": 40,
+                "verdict": "MEDIUM_Risk"
+            }
+        }
+    },
+    {
+        "id": 27,
+        "timestamp": "2026-09-14T19:41:14.632800",
+        "filename": "Text Message",
+        "file_type": "message",
+        "risk_score": 40,
+        "verdict": "MEDIUM_Risk",
+        "report": {
+            "verification": {
+                "file_type": "message",
+                "status": "completed"
+            },
+            "message_analysis": {
+                "method": "Message Forensic Analysis",
+                "analysis_status": "COMPLETED",
+                "text_length": 130,
+                "word_count": 20,
+                "character_count": 130,
+                "url_count": 1,
+                "email_count": 1,
+                "phone_ count": 0,
+                "suspicious_keywords": [
+                    "urgent",
+                    "verify your account",
+                    "click here",
+                    "congratulations",
+                    "you have won"
+                ],
+                "exclamation_count": 1,
+                "question_count": 0,
+                "uppercase_ratio": 0.087,
+                "repeated_punctuation": false,
+                "risk_score": 40,
+                "verdict": "MEDIUM_Risk",
+                "reasons": [
+                    "Detected 5 suspicious keyword pattern(s).",
+                    "Detected 1 URL/link(s).",
+                    "Detected 1 email address(es)."
+                ]
+            },
+            "summary": {
+                "analysis_status": "COMPLETED",
+                "word_count": 20,
+                "url_count": 1,
+                "email_count": 1,
+                "phone_count": 0,
+                "risk_score": 40,
+                "verdict": "MEDIUM_Risk"
             }
         }
     }

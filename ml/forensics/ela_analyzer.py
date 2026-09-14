@@ -16,8 +16,6 @@ class ELAAnalyzer:
 
         image = Image.open(image_path).convert("RGB")
 
-        # Original image ko JPEG quality 90 par save karke
-        # temporary compressed version banate hain.
         buffer = io.BytesIO()
 
         image.save(
@@ -41,7 +39,37 @@ class ELAAnalyzer:
             difference
         ).enhance(10)
 
-        # Difference statistics
+        project_root = Path(__file__).resolve().parents[2]
+
+        heatmap_dir = (
+            project_root
+            / "backend"
+            / "reports"
+            / "ela"
+        )
+
+        heatmap_dir.mkdir(
+            parents=True,
+            exist_ok=True
+        )
+
+        heatmap_name = (
+            image_path.stem + "_ela.png"
+        )
+
+        heatmap_path = (
+            heatmap_dir / heatmap_name
+        )
+
+        enhanced.save(
+            heatmap_path,
+            format="PNG"
+        )
+
+        # =====================================================
+        # DIFFERENCE STATISTICS
+        # =====================================================
+
         extrema = enhanced.getextrema()
 
         max_difference = max(
@@ -64,5 +92,8 @@ class ELAAnalyzer:
             "mean_difference": round(
                 float(mean_difference),
                 4
+            ),
+            "heatmap_path": str(
+                heatmap_path
             )
         }

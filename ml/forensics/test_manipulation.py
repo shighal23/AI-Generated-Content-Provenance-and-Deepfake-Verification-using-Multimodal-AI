@@ -34,6 +34,9 @@ def main():
         print("\nNoise:")
         print(result["noise"])
 
+        print("\nIntegrity:")
+        print(result["integrity"])
+
         print("=" * 50)
 
     except Exception as e:

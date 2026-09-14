@@ -7,7 +7,6 @@ import sys
 import json
 from datetime import datetime
 
-
 # =========================================================
 # PROJECT PATH
 # =========================================================
@@ -36,6 +35,10 @@ from ml.forensics.video_analyzer import (
 
 from ml.forensics.audio_analyzer import (
     AudioAnalyzer
+)
+
+from ml.forensics.message_analyzer import (
+    MessageAnalyzer
 )
 
 
@@ -184,15 +187,15 @@ MAX_FILE_SIZE = 10 * 1024 * 1024
 
 detector = ImageDetector()
 
-manipulation_analyzer = (
-    ManipulationAnalyzer()
-)
+manipulation_analyzer = ManipulationAnalyzer()
 
 risk_engine = RiskEngine()
 
 video_analyzer = VideoAnalyzer()
 
 audio_analyzer = AudioAnalyzer()
+
+message_analyzer = MessageAnalyzer()
 
 
 # =========================================================
@@ -289,10 +292,6 @@ def build_verification_report(
 
     return {
 
-        # =================================================
-        # VERIFICATION INFORMATION
-        # =================================================
-
         "verification": {
 
             "filename": filename,
@@ -302,17 +301,7 @@ def build_verification_report(
             "status": "completed"
         },
 
-
-        # =================================================
-        # MACHINE LEARNING ANALYSIS
-        # =================================================
-
         "ml_analysis": detector_result,
-
-
-        # =================================================
-        # FORENSIC ANALYSIS
-        # =================================================
 
         "forensics": {
 
@@ -337,17 +326,7 @@ def build_verification_report(
             )
         },
 
-
-        # =================================================
-        # RISK ASSESSMENT
-        # =================================================
-
         "risk_assessment": risk_result,
-
-
-        # =================================================
-        # SUMMARY
-        # =================================================
 
         "summary": {
 
@@ -408,10 +387,6 @@ async def analyze_image(
     file: UploadFile = File(...)
 ):
 
-    # =====================================================
-    # CHECK FILE NAME
-    # =====================================================
-
     if not file.filename:
 
         raise HTTPException(
@@ -419,15 +394,9 @@ async def analyze_image(
             detail="No file selected."
         )
 
-
-    # =====================================================
-    # CHECK EXTENSION
-    # =====================================================
-
     extension = Path(
         file.filename
     ).suffix.lower()
-
 
     if extension not in ALLOWED_EXTENSIONS:
 
@@ -439,17 +408,7 @@ async def analyze_image(
             )
         )
 
-
-    # =====================================================
-    # READ FILE
-    # =====================================================
-
     file_data = await file.read()
-
-
-    # =====================================================
-    # CHECK FILE SIZE
-    # =====================================================
 
     if len(file_data) > MAX_FILE_SIZE:
 
@@ -460,16 +419,10 @@ async def analyze_image(
             )
         )
 
-
-    # =====================================================
-    # SAVE UPLOADED FILE
-    # =====================================================
-
     file_path = (
         UPLOAD_DIR /
         file.filename
     )
-
 
     try:
 
@@ -486,11 +439,6 @@ async def analyze_image(
             )
         )
 
-
-    # =====================================================
-    # ML IMAGE ANALYSIS
-    # =====================================================
-
     try:
 
         detector_result = detector.analyze(
@@ -506,11 +454,6 @@ async def analyze_image(
                 f"{str(e)}"
             )
         )
-
-
-    # =====================================================
-    # FORENSIC ANALYSIS
-    # =====================================================
 
     try:
 
@@ -529,11 +472,6 @@ async def analyze_image(
                 f"{str(e)}"
             )
         )
-
-
-    # =====================================================
-    # RISK ANALYSIS
-    # =====================================================
 
     try:
 
@@ -554,52 +492,25 @@ async def analyze_image(
             )
         )
 
-
-    # =====================================================
-    # BUILD COMPLETE REPORT
-    # =====================================================
-
     report = build_verification_report(
-
         filename=file.filename,
-
         file_size=len(file_data),
-
         detector_result=detector_result,
-
         forensic_result=forensic_result,
-
         risk_result=risk_result
     )
 
-
-    # =====================================================
-    # LOAD HISTORY
-    # =====================================================
-
     history = load_history()
 
-
-    # =====================================================
-    # GENERATE HISTORY ID
-    # =====================================================
-
-    history_id = (
-        get_next_history_id(history)
+    history_id = get_next_history_id(
+        history
     )
-
-
-    # =====================================================
-    # CREATE HISTORY RECORD
-    # =====================================================
 
     history_record = {
 
         "id": history_id,
 
-        "timestamp": (
-            datetime.now().isoformat()
-        ),
+        "timestamp": datetime.now().isoformat(),
 
         "filename": file.filename,
 
@@ -618,11 +529,6 @@ async def analyze_image(
         "report": report
     }
 
-
-    # =====================================================
-    # SAVE HISTORY
-    # =====================================================
-
     history.append(
         history_record
     )
@@ -630,11 +536,6 @@ async def analyze_image(
     save_history(
         history
     )
-
-
-    # =====================================================
-    # RETURN RESPONSE
-    # =====================================================
 
     return {
 
@@ -659,10 +560,6 @@ async def analyze_video(
     file: UploadFile = File(...)
 ):
 
-    # =====================================================
-    # CHECK FILE NAME
-    # =====================================================
-
     if not file.filename:
 
         raise HTTPException(
@@ -670,15 +567,9 @@ async def analyze_video(
             detail="No video file selected."
         )
 
-
-    # =====================================================
-    # CHECK VIDEO EXTENSION
-    # =====================================================
-
     extension = Path(
         file.filename
     ).suffix.lower()
-
 
     if extension not in ALLOWED_VIDEO_EXTENSIONS:
 
@@ -690,17 +581,7 @@ async def analyze_video(
             )
         )
 
-
-    # =====================================================
-    # READ VIDEO FILE
-    # =====================================================
-
     file_data = await file.read()
-
-
-    # =====================================================
-    # CHECK FILE SIZE
-    # =====================================================
 
     if len(file_data) > MAX_FILE_SIZE:
 
@@ -711,16 +592,10 @@ async def analyze_video(
             )
         )
 
-
-    # =====================================================
-    # SAVE VIDEO FILE
-    # =====================================================
-
     file_path = (
         UPLOAD_DIR /
         file.filename
     )
-
 
     try:
 
@@ -736,11 +611,6 @@ async def analyze_video(
                 f"Unable to save video: {str(e)}"
             )
         )
-
-
-    # =====================================================
-    # VIDEO FORENSIC ANALYSIS
-    # =====================================================
 
     try:
 
@@ -759,11 +629,6 @@ async def analyze_video(
                 f"{str(e)}"
             )
         )
-
-
-    # =====================================================
-    # BUILD VIDEO REPORT
-    # =====================================================
 
     report = {
 
@@ -806,34 +671,17 @@ async def analyze_video(
         }
     }
 
-
-    # =====================================================
-    # LOAD HISTORY
-    # =====================================================
-
     history = load_history()
 
-
-    # =====================================================
-    # GENERATE HISTORY ID
-    # =====================================================
-
-    history_id = (
-        get_next_history_id(history)
+    history_id = get_next_history_id(
+        history
     )
-
-
-    # =====================================================
-    # CREATE VIDEO HISTORY RECORD
-    # =====================================================
 
     history_record = {
 
         "id": history_id,
 
-        "timestamp": (
-            datetime.now().isoformat()
-        ),
+        "timestamp": datetime.now().isoformat(),
 
         "filename": file.filename,
 
@@ -846,11 +694,6 @@ async def analyze_video(
         "report": report
     }
 
-
-    # =====================================================
-    # SAVE HISTORY
-    # =====================================================
-
     history.append(
         history_record
     )
@@ -858,11 +701,6 @@ async def analyze_video(
     save_history(
         history
     )
-
-
-    # =====================================================
-    # RETURN RESPONSE
-    # =====================================================
 
     return {
 
@@ -887,10 +725,6 @@ async def analyze_audio(
     file: UploadFile = File(...)
 ):
 
-    # =====================================================
-    # CHECK FILE NAME
-    # =====================================================
-
     if not file.filename:
 
         raise HTTPException(
@@ -898,15 +732,9 @@ async def analyze_audio(
             detail="No audio file selected."
         )
 
-
-    # =====================================================
-    # CHECK AUDIO EXTENSION
-    # =====================================================
-
     extension = Path(
         file.filename
     ).suffix.lower()
-
 
     if extension not in ALLOWED_AUDIO_EXTENSIONS:
 
@@ -918,17 +746,7 @@ async def analyze_audio(
             )
         )
 
-
-    # =====================================================
-    # READ AUDIO FILE
-    # =====================================================
-
     file_data = await file.read()
-
-
-    # =====================================================
-    # CHECK FILE SIZE
-    # =====================================================
 
     if len(file_data) > MAX_FILE_SIZE:
 
@@ -939,16 +757,10 @@ async def analyze_audio(
             )
         )
 
-
-    # =====================================================
-    # SAVE AUDIO FILE
-    # =====================================================
-
     file_path = (
         UPLOAD_DIR /
         file.filename
     )
-
 
     try:
 
@@ -964,11 +776,6 @@ async def analyze_audio(
                 f"Unable to save audio: {str(e)}"
             )
         )
-
-
-    # =====================================================
-    # AUDIO FORENSIC ANALYSIS
-    # =====================================================
 
     try:
 
@@ -987,11 +794,6 @@ async def analyze_audio(
                 f"{str(e)}"
             )
         )
-
-
-    # =====================================================
-    # BUILD AUDIO REPORT
-    # =====================================================
 
     report = {
 
@@ -1050,6 +852,182 @@ async def analyze_audio(
         }
     }
 
+    history = load_history()
+
+    history_id = get_next_history_id(
+        history
+    )
+
+    history_record = {
+
+        "id": history_id,
+
+        "timestamp": datetime.now().isoformat(),
+
+        "filename": file.filename,
+
+        "file_type": "audio",
+
+        "risk_score": None,
+
+        "verdict": "AUDIO_ANALYSIS_COMPLETED",
+
+        "report": report
+    }
+
+    history.append(
+        history_record
+    )
+
+    save_history(
+        history
+    )
+
+    return {
+
+        "status": "success",
+
+        "message": (
+            "Audio verification completed"
+        ),
+
+        "report": report,
+
+        "history_id": history_id
+    }
+
+
+# =========================================================
+# MESSAGE / TEXT ANALYSIS
+# =========================================================
+
+@app.post("/api/analyze/message")
+async def analyze_message(
+    payload: dict
+):
+
+    # =====================================================
+    # VALIDATE INPUT
+    # =====================================================
+
+    if not isinstance(payload, dict):
+
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid request body."
+        )
+
+    text = payload.get(
+        "text",
+        ""
+    )
+
+    if not isinstance(text, str):
+
+        raise HTTPException(
+            status_code=400,
+            detail="Message text must be a string."
+        )
+
+    text = text.strip()
+
+    if not text:
+
+        raise HTTPException(
+            status_code=400,
+            detail="Message text cannot be empty."
+        )
+
+
+    # =====================================================
+    # RUN MESSAGE ANALYSIS
+    # =====================================================
+
+    try:
+
+        result = message_analyzer.analyze(
+            text
+        )
+
+    except ValueError as exc:
+
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc)
+        )
+
+    except Exception as exc:
+
+        raise HTTPException(
+            status_code=500,
+            detail=(
+                "Message analysis failed: "
+                f"{str(exc)}"
+            )
+        )
+
+
+    # =====================================================
+    # BUILD MESSAGE REPORT
+    # =====================================================
+
+    report = {
+
+        "verification": {
+
+            "file_type": "message",
+
+            "status": "completed"
+        },
+
+        "message_analysis": result,
+
+        "summary": {
+
+            "analysis_status":
+                result.get(
+                    "analysis_status",
+                    "UNKNOWN"
+                ),
+
+            "word_count":
+                result.get(
+                    "word_count",
+                    0
+                ),
+
+            "url_count":
+                result.get(
+                    "url_count",
+                    0
+                ),
+
+            "email_count":
+                result.get(
+                    "email_count",
+                    0
+                ),
+
+            "phone_count":
+                result.get(
+                    "phone_count",
+                    0
+                ),
+
+            "risk_score":
+                result.get(
+                    "risk_score",
+                    0
+                ),
+
+            "verdict":
+                result.get(
+                    "verdict",
+                    "UNKNOWN"
+                )
+        }
+    }
+
 
     # =====================================================
     # LOAD HISTORY
@@ -1062,30 +1040,34 @@ async def analyze_audio(
     # GENERATE HISTORY ID
     # =====================================================
 
-    history_id = (
-        get_next_history_id(history)
+    history_id = get_next_history_id(
+        history
     )
 
 
     # =====================================================
-    # CREATE AUDIO HISTORY RECORD
+    # CREATE MESSAGE HISTORY RECORD
     # =====================================================
 
     history_record = {
 
         "id": history_id,
 
-        "timestamp": (
-            datetime.now().isoformat()
+        "timestamp": datetime.now().isoformat(),
+
+        "filename": "Text Message",
+
+        "file_type": "message",
+
+        "risk_score": result.get(
+            "risk_score",
+            0
         ),
 
-        "filename": file.filename,
-
-        "file_type": "audio",
-
-        "risk_score": None,
-
-        "verdict": "AUDIO_ANALYSIS_COMPLETED",
+        "verdict": result.get(
+            "verdict",
+            "UNKNOWN"
+        ),
 
         "report": report
     }
@@ -1113,7 +1095,7 @@ async def analyze_audio(
         "status": "success",
 
         "message": (
-            "Audio verification completed"
+            "Message analysis completed"
         ),
 
         "report": report,
@@ -1152,7 +1134,6 @@ def get_history_item(
 
     history = load_history()
 
-
     for item in history:
 
         try:
@@ -1168,7 +1149,6 @@ def get_history_item(
 
             continue
 
-
         if item_id == history_id:
 
             return {
@@ -1177,7 +1157,6 @@ def get_history_item(
 
                 "history": item
             }
-
 
     raise HTTPException(
         status_code=404,
@@ -1200,7 +1179,6 @@ def delete_history_item(
 
     deleted = False
 
-
     for item in history:
 
         try:
@@ -1216,18 +1194,15 @@ def delete_history_item(
 
             item_id = -1
 
-
         if item_id == history_id:
 
             deleted = True
 
             continue
 
-
         updated_history.append(
             item
         )
-
 
     if not deleted:
 
@@ -1236,11 +1211,9 @@ def delete_history_item(
             detail="History record not found."
         )
 
-
     save_history(
         updated_history
     )
-
 
     return {
 
@@ -1271,9 +1244,7 @@ def clear_history():
         history
     )
 
-
     save_history([])
-
 
     return {
 
