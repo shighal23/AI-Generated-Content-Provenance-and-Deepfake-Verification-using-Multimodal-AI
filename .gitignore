@@ -1,26 +1,49 @@
 # Python
 __pycache__/
-*.py[cod]
+*.pyc
 *.pyo
+*.pyd
 
-# Virtual environments
+# Virtual environment
 .venv/
 venv/
 env/
 
-# Generated ELA reports
-backend/reports/
-backend/backend/
+# Node
+node_modules/
+frontend/dist/
 
-# Test media
-test_audio.mp3
-test_video.mp4
+# Environment / secrets
+.env
+.env.*
+!.env.example
 
-# Frontend backup files
-frontend/src/*_backup*.jsx
-
-# Local history
-# Uncomment this if you don't want local analysis history on GitHub
-# backend/history/history.json
-# Uploaded files
+# Runtime data
 backend/uploads/
+backend/history/
+backend/reports/
+
+# ML datasets
+data/
+*.zip
+
+# Hugging Face / dataset caches
+.cache/
+**/.cache/
+
+# Model checkpoints
+models/*.pth
+models/*.pt
+models/*.bin
+models/*.safetensors
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
