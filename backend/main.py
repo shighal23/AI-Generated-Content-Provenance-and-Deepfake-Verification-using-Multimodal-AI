@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from app.api.auth import router as auth_router
 
 from pathlib import Path
 import sys
@@ -84,6 +85,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
+app.include_router(auth_router)
 
 # =========================================================
 # BASE DIRECTORIES
