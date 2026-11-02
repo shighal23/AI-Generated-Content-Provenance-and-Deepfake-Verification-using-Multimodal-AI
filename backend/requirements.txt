@@ -12,3 +12,4 @@ opencv-python-headless
 torch
 torchvision
 reportlab
+mutagen
