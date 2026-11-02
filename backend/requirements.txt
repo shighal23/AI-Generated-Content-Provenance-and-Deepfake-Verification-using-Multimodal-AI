@@ -3,3 +3,12 @@ uvicorn[standard]
 PyJWT
 SQLAlchemy
 email-validator
+bcrypt
+python-multipart
+python-dotenv
+Pillow
+numpy
+opencv-python-headless
+torch
+torchvision
+reportlab
