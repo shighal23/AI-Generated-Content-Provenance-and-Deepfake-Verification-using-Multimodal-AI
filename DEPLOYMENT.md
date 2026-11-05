@@ -15,7 +15,7 @@ The frontend is deployed to Vercel and the FastAPI service to Render.
 
 1. Create a Blueprint from this repository and use the root `render.yaml`.
 2. When prompted for `FRONTEND_ORIGINS`, enter the Vercel origin (for example, `https://your-project.vercel.app`). Separate multiple allowed origins with commas.
-3. The blueprint uses the Standard instance plan and a persistent disk mounted at `/var/data`. It initializes the authentication database at startup and keeps uploads, reports, and analysis history on that disk.
+3. The blueprint uses Render's free instance plan. Free instances have limited memory and do not include persistent disks, so PyTorch may run out of memory and the local authentication database, uploads, reports, and analysis history can be lost when the service restarts or sleeps.
 4. After deployment, copy the service URL into Vercel's `VITE_API_URL` as described above.
 
 The Render build installs CPU-only PyTorch and the backend dependencies. The service runs one Uvicorn worker to limit memory use.

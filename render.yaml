@@ -2,21 +2,13 @@ services:
   - type: web
     name: deepverify-x-api
     runtime: python
-    plan: standard
+    plan: free
     buildCommand: pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu && pip install -r backend/requirements.txt
     startCommand: cd backend && python init_auth_db.py && uvicorn main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
-    disk:
-      name: deepverify-data
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
-      - key: DEEPVERIFY_DATA_DIR
-        value: /var/data
-      - key: DATABASE_URL
-        value: sqlite:////var/data/deepverify_auth.db
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_ORIGINS
