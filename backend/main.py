@@ -5,6 +5,7 @@ from fastapi.responses import FileResponse
 from app.api.auth import router as auth_router
 
 from pathlib import Path
+import os
 import sys
 import json
 import uuid
@@ -92,10 +93,11 @@ app.include_router(auth_router)
 # =========================================================
 
 BASE_DIR = Path(__file__).resolve().parent
+DATA_DIR = Path(os.getenv("DEEPVERIFY_DATA_DIR", str(BASE_DIR)))
 
-UPLOAD_DIR = BASE_DIR / "uploads"
-HISTORY_DIR = BASE_DIR / "history"
-REPORTS_DIR = BASE_DIR / "reports"
+UPLOAD_DIR = DATA_DIR / "uploads"
+HISTORY_DIR = DATA_DIR / "history"
+REPORTS_DIR = DATA_DIR / "reports"
 
 HISTORY_FILE = HISTORY_DIR / "history.json"
 
@@ -152,8 +154,12 @@ app.mount(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173"
+        origin.strip().rstrip("/")
+        for origin in os.getenv(
+            "FRONTEND_ORIGINS",
+            "http://localhost:5173,http://127.0.0.1:5173",
+        ).split(",")
+        if origin.strip()
     ],
 
     allow_credentials=True,
@@ -3014,4 +3020,3 @@ async def security_scanner_scan(payload: dict):
         "report": report,
         "history_id": history_id
     }
-

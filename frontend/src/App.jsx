@@ -6,7 +6,7 @@ import SecurityScanner from "./components/SecurityScanner";
 import ELAAnalysis from "./components/ELAAnalysis";
 import ComputerFiles from "./components/ComputerFiles";
 
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = (import.meta.env.VITE_API_URL || "http://127.0.0.1:8000").replace(/\/+$/, "");
 
 function Icon({ name, size = 18 }) {
   const p = {

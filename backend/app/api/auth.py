@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+import os
 
 import jwt
 from fastapi import APIRouter, Depends, HTTPException, status, Header
@@ -22,7 +23,10 @@ from app.services.auth_service import (
 # JWT CONFIG
 # =========================================================
 
-SECRET_KEY = "deepverify-x-change-this-secret-key"
+SECRET_KEY = os.getenv(
+    "JWT_SECRET",
+    "deepverify-x-change-this-secret-key",
+)
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
