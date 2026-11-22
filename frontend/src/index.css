@@ -221,3 +221,192 @@ select {
     font-size: 13px;
   }
 }
+
+/* Dark palette for the dashboard's built-in theme switch. */
+.dv-root.dv-dark {
+  min-height: 100vh;
+  background: #0b1220;
+  color: #e5edf8;
+  color-scheme: dark;
+}
+
+.dv-root.dv-dark .dv-top {
+  background: rgba(11, 18, 32, 0.94);
+  border-bottom-color: #26364d;
+}
+
+.dv-root.dv-dark .dv-search,
+.dv-root.dv-dark .dv-upload,
+.dv-root.dv-dark .dv-tab {
+  background: #111c2d;
+  border-color: #2a3a52;
+  color: #d7e2f0;
+}
+
+.dv-root.dv-dark .dv-search input,
+.dv-root.dv-dark .dv-input,
+.dv-root.dv-dark .dv-textarea,
+.dv-root.dv-dark .dv-form-group input {
+  background: #0c1625;
+  border-color: #2a3a52;
+  color: #e5edf8;
+}
+
+.dv-root.dv-dark .dv-search input::placeholder,
+.dv-root.dv-dark .dv-input::placeholder,
+.dv-root.dv-dark .dv-textarea::placeholder,
+.dv-root.dv-dark .dv-form-group input::placeholder {
+  color: #8293aa;
+}
+
+.dv-root.dv-dark .dv-icon-btn,
+.dv-root.dv-dark .dv-btn,
+.dv-root.dv-dark .dv-close,
+.dv-root.dv-dark .dv-login-close,
+.dv-root.dv-dark .dv-social-btn,
+.dv-root.dv-dark .dv-settings-card button {
+  background: #172438;
+  border-color: #30425c;
+  color: #d7e2f0;
+}
+
+.dv-root.dv-dark .dv-icon-btn:hover,
+.dv-root.dv-dark .dv-btn:hover,
+.dv-root.dv-dark .dv-tab:hover,
+.dv-root.dv-dark .dv-drop button:hover,
+.dv-root.dv-dark .dv-settings-card button:hover {
+  background: #20324b;
+}
+
+.dv-root.dv-dark .dv-drop,
+.dv-root.dv-dark .dv-modal,
+.dv-root.dv-dark .dv-login-modal,
+.dv-root.dv-dark .dv-table {
+  background: #111c2d;
+  border-color: #2a3a52;
+  color: #e5edf8;
+}
+
+.dv-root.dv-dark .dv-drop button,
+.dv-root.dv-dark .dv-form-group label,
+.dv-root.dv-dark .dv-login-header h2,
+.dv-root.dv-dark .dv-social-btn,
+.dv-root.dv-dark .dv-settings-card strong {
+  color: #d7e2f0;
+}
+
+.dv-root.dv-dark .dv-hero {
+  background: linear-gradient(135deg, #121f32, #15243a);
+  border-color: #2a3a52;
+}
+
+.dv-root.dv-dark .dv-hero p,
+.dv-root.dv-dark .dv-section-head p,
+.dv-root.dv-dark .dv-bar,
+.dv-root.dv-dark .dv-card p,
+.dv-root.dv-dark .dv-kv span,
+.dv-root.dv-dark .dv-reason,
+.dv-root.dv-dark .dv-login-header p,
+.dv-root.dv-dark .dv-login-options,
+.dv-root.dv-dark .dv-login-switch {
+  color: #9aacc3;
+}
+
+.dv-root.dv-dark .dv-badge-top,
+.dv-root.dv-dark .dv-stat-icon,
+.dv-root.dv-dark .dv-card-icon,
+.dv-root.dv-dark .dv-tab.active,
+.dv-root.dv-dark .dv-login-logo {
+  background: #1b3150;
+  color: #8dbaff;
+}
+
+.dv-root.dv-dark .dv-stat,
+.dv-root.dv-dark .dv-card,
+.dv-root.dv-dark .dv-panel,
+.dv-root.dv-dark .dv-verification,
+.dv-root.dv-dark .dv-result {
+  background: #111c2d;
+  border-color: #2a3a52;
+}
+
+.dv-root.dv-dark .dv-stat-top,
+.dv-root.dv-dark .dv-section-head h2,
+.dv-root.dv-dark .dv-panel h3,
+.dv-root.dv-dark .dv-section-head,
+.dv-root.dv-dark .dv-bar,
+.dv-root.dv-dark .dv-settings-card span {
+  color: #c4d2e3;
+}
+
+.dv-root.dv-dark .dv-progress,
+.dv-root.dv-dark .dv-bar-track,
+.dv-root.dv-dark .dv-score-track {
+  background: #26364d;
+}
+
+.dv-root.dv-dark .dv-gauge-inner {
+  background: #111c2d;
+}
+
+.dv-root.dv-dark .dv-activity-item,
+.dv-root.dv-dark .dv-row,
+.dv-root.dv-dark .dv-kv,
+.dv-root.dv-dark .dv-reason,
+.dv-root.dv-dark .dv-setting {
+  border-color: #26364d;
+}
+
+.dv-root.dv-dark .dv-activity-icon,
+.dv-root.dv-dark .dv-head,
+.dv-root.dv-dark .dv-score,
+.dv-root.dv-dark .dv-box,
+.dv-root.dv-dark .dv-reasons,
+.dv-root.dv-dark .dv-settings-card {
+  background: #172438;
+  border-color: #30425c;
+  color: #d7e2f0;
+}
+
+.dv-root.dv-dark .dv-score-label,
+.dv-root.dv-dark .dv-result-file,
+.dv-root.dv-dark .dv-info small {
+  color: #9aacc3;
+}
+
+.dv-root.dv-dark .dv-info {
+  border-color: #30425c;
+}
+
+.dv-root.dv-dark .dv-integrity {
+  background: #142a43;
+  border-color: #28527e;
+}
+
+.dv-root.dv-dark .dv-hash {
+  background: #0c1625;
+  border-color: #30425c;
+  color: #a9ccff;
+}
+
+.dv-root.dv-dark .dv-login-divider:before,
+.dv-root.dv-dark .dv-login-divider:after {
+  background: #30425c;
+}
+
+.dv-root.dv-dark .dv-settings-card strong {
+  color: #d7e2f0;
+}
+
+.dv-root.dv-dark .dv-btn.primary,
+.dv-root.dv-dark .dv-login-submit {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.dv-root.dv-dark .dv-tab.active {
+  background: #1b3150;
+  border-color: #3b82f6;
+  color: #a9ccff;
+}
