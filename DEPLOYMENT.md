@@ -6,8 +6,8 @@ The frontend is deployed to Vercel and the FastAPI service to Render.
 
 1. Import this GitHub repository into Vercel and set the project root to `frontend`.
 2. Deploy once to obtain the frontend URL.
-3. Add `VITE_API_URL` in the Vercel project environment variables, set to the Render service URL (for example, `https://deepverify-x-api.onrender.com`), with no trailing slash.
-4. Redeploy after setting the variable.
+3. The production frontend defaults to `https://deepverify-x-api.onrender.com`, the Render service created by `render.yaml`. Set `VITE_API_URL` only if the backend uses a different URL; use the full Render service URL with no trailing slash.
+4. Redeploy after changing frontend code or `VITE_API_URL`.
 
 `frontend/vercel.json` supplies the Vite build/output settings and SPA fallback.
 
