@@ -115,7 +115,9 @@ function App() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showNotificationPanel, setShowNotificationPanel] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
-  const [darkThemeEnabled, setDarkThemeEnabled] = useState(true);
+  const [darkThemeEnabled, setDarkThemeEnabled] = useState(
+    () => localStorage.getItem("deepverify_theme") !== "light"
+  );
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
 
   const dashboardRef = useRef(null);
@@ -804,7 +806,13 @@ function App() {
         <div className="dv-modal-bg" onClick={() => setShowSettingsModal(false)}>
           <div className="dv-modal" onClick={(e) => e.stopPropagation()}>
             <div className="dv-modal-head"><h2>Settings</h2><button className="dv-close" onClick={()=>setShowSettingsModal(false)}><Icon name="close" size={14}/></button></div>
-            <div className="dv-setting"><div><strong>Dark Forensic Theme</strong><span>Keep the dashboard in dark-inspired forensic styling.</span></div><button className={`dv-toggle ${darkThemeEnabled ? "on" : ""}`} onClick={()=>setDarkThemeEnabled(v=>!v)}><i/></button></div>
+            <div className="dv-setting">
+              <div><strong>Appearance</strong><span>Choose light or dark mode.</span></div>
+              <div className="dv-theme-options" role="group" aria-label="Color theme">
+                <button type="button" className={`dv-theme-option ${!darkThemeEnabled ? "active" : ""}`} aria-pressed={!darkThemeEnabled} onClick={() => { localStorage.setItem("deepverify_theme", "light"); setDarkThemeEnabled(false); }}>Light</button>
+                <button type="button" className={`dv-theme-option ${darkThemeEnabled ? "active" : ""}`} aria-pressed={darkThemeEnabled} onClick={() => { localStorage.setItem("deepverify_theme", "dark"); setDarkThemeEnabled(true); }}>Dark</button>
+              </div>
+            </div>
             <div className="dv-setting"><div><strong>Auto Scroll</strong><span>Scroll to fresh analysis results automatically.</span></div><button className={`dv-toggle ${autoScrollEnabled ? "on" : ""}`} onClick={()=>setAutoScrollEnabled(v=>!v)}><i/></button></div>
             <div className="dv-setting"><div><strong>API Endpoint</strong><span>{API_URL}</span></div><span className="dv-badge low">CONNECTED</span></div>
           </div>

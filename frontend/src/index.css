@@ -410,3 +410,47 @@ select {
   border-color: #3b82f6;
   color: #a9ccff;
 }
+
+.dv-theme-options {
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid #dbe3ee;
+  border-radius: 9px;
+  background: #f1f5f9;
+}
+
+.dv-theme-option {
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #64748b;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.dv-theme-option.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+}
+
+.dv-root.dv-dark .dv-theme-options {
+  border-color: #30425c;
+  background: #0c1625;
+}
+
+.dv-root.dv-dark .dv-theme-option {
+  color: #9aacc3;
+}
+
+.dv-root.dv-dark .dv-theme-option.active {
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: none;
+}
