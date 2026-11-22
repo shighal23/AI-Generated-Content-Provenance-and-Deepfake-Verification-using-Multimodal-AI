@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
-const API_URL = "http://127.0.0.1:8000";
+import { API_URL } from "../api";
 
 function formatBytes(value) {
   const size = Number(value || 0);
